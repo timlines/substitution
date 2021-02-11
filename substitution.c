@@ -1,19 +1,76 @@
 #include <stdio.h>
 #include <cs50.h>
+#include <string.h>
+#include <ctype.h>
 
 
 int main(int argc, string argv[])
 {
-    if (argc != 2)
+    if (argc != 2) // check for two command lines
     {
         printf("Usage: ./substition key\n");
         return 1;
     }
-    string p = get_string("plaintext:  "); //get text to encrypt
+
+    int n = strlen(argv[1]);
+
+    if (n != 26)
+    {
+        printf("Key must contain 26 characters.\n");
+        return 1;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        int j = isalpha(argv[1][i]); //is it a letter
+        if (j == 0) // Check if it's not a letter
+        {
+            printf("Key must only contain letters.\n"); // message
+            return 1; // secrect error code
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for(int j = i + 1; j < n; j++)
+        {
+            if (argv[1][i] == argv[1][j])
+            {
+            printf("Key must not contain repeated characters.\n"); // message
+            return 1; // secrect error code
+            }
+        }
+    }
+
+    string plaintext = get_string("plaintext:  "); //get text to encrypt
     printf("ciphertext: "); // ciphertext heading.
-    printf("VKXXN"); //encrypted text
+
+    for (int i = 0, p = strlen(plaintext); i < p; i++)
+    {
+        if (isupper(plaintext[i]))
+        {
+            int l = plaintext[i];
+            l = l - 65;
+            printf("%c", argv[1][l]);
+        }
+        if (islower(plaintext[i]))
+        {
+            int l = plaintext[i];
+            l = l - 97;
+            printf("%c", argv[1][l]);
+        }
+        else // if it's not upper or lowercase don't rotate it.
+        {
+            printf("%c", plaintext[i]);
+        }
+    }
+
+
+
+
     printf("\n"); //Print a new line
     return 0;
+
 }
 
 /*
@@ -62,12 +119,42 @@ Your program should then exit by returning 0 from main.
 More details on the problem here:
 https://cs50.harvard.edu/x/2021/psets/2/substitution/#:~:text=o
 
+"Key must contain 26 characters."
+"Key must only contain letters.""
+"Key must not contain repeated characters."
 
 
+LOG 1:25 PM
 
+Okay I have the key working so that it rejects all the bad keys.
 
+Now to make the encryption work. In caesar I had to first
+change the string to a int, but in this case the string
+is already providing characters so that's one less thing.
 
+The first thing here is to get the plain text and make sure
+I can iterate every charcter of that text and print it.
 
+Okay so the next step is to change the normal letters into
+numbers so that A = 0, and B = 1, and so on.
 
+that way I could just type in key[1] to get a and so on.
+
+Great that basic implementation works if you enter just
+capital letters. The next problem is lowercase, then also
+matching the spacing and puncuation. Then also, the key needs
+to match the same puncuation and case.
+
+Great, so with a few modication it will now accept upper and lower
+case and then also carry over the spaces, puncutaion and
+numbers.
+
+The next problem is that it's not preserving the case,
+becasue it's simply just writing whatever the key that was
+given. The extra probelm with that is that the key can be
+upper or lower case, but either way it needs to match the
+case of the plaintext.
+
+So I'll have to think about how I can do that?
 
 */
