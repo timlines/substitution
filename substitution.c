@@ -6,72 +6,68 @@
 
 int main(int argc, string argv[])
 {
-    if (argc != 2) // check for two command lines
+    if (argc != 2)                                              // check for two command lines
     {
-        printf("Usage: ./substition key\n");
-        return 1;
+        printf("Usage: ./substition key\n");                    //warning message
+        return 1;                                               // secret error code
     }
 
     int n = strlen(argv[1]);
 
     if (n != 26)
     {
-        printf("Key must contain 26 characters.\n");
-        return 1;
+        printf("Key must contain 26 characters.\n");            //warning message
+        return 1;                                               // secret error code
     }
 
     for (int i = 0; i < n; i++)
     {
-        int j = isalpha(argv[1][i]); //is it a letter
-        if (j == 0) // Check if it's not a letter
+        int j = isalpha(argv[1][i]);                            //is it a letter
+        if (j == 0)                                             // Check if it's not a letter
         {
-            printf("Key must only contain letters.\n"); // message
-            return 1; // secrect error code
+            printf("Key must only contain letters.\n");         // warning message
+            return 1;                                           // secret error code
         }
     }
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)                                 // Loop through the string
     {
-        for(int j = i + 1; j < n; j++)
+        for (int j = i + 1; j < n; j++)                         // Loop through every letter
         {
-            if (argv[1][i] == argv[1][j])
+            if (argv[1][i] == argv[1][j])                       // check for repreated letters
             {
-            printf("Key must not contain repeated characters.\n"); // message
-            return 1; // secrect error code
+                printf("Key must not contain repeated characters.\n"); // message
+                return 1;                                       // secret error code
             }
         }
     }
 
-    string plaintext = get_string("plaintext:  "); //get text to encrypt
-    printf("ciphertext: "); // ciphertext heading.
+    string plaintext = get_string("plaintext:  ");              //get text to encrypt
+    printf("ciphertext: ");                                     // ciphertext heading.
 
-    for (int i = 0, p = strlen(plaintext); i < p; i++)
+    for (int i = 0, p = strlen(plaintext); i < p; i++)          //Loop through the plaintext
     {
-        if (isupper(plaintext[i]))
+        if (isupper(plaintext[i]))                              //if it is uppercase../
         {
-            int l = plaintext[i];
-            l = l - 65;
-            char c = toupper(argv[1][l]);
-            printf("%c", c);
+            int l = plaintext[i];                               //save as integer
+            l = l - 65;                                         // Subtract 65 for ASCII values
+            char c = toupper(argv[1][l]);                       //save the matching key value as a capitilized character named c
+            printf("%c", c);                                    //print that
         }
-        else if (islower(plaintext[i]))
+        else if (islower(plaintext[i]))                         //Do the same thing for lowercase
         {
             int l = plaintext[i];
             l = l - 97;
             char c = tolower(argv[1][l]);
             printf("%c", c);
         }
-        else // if it's not upper or lowercase don't rotate it.
+        else                                                    // if it's not upper or lowercase don't rotate it.
         {
             printf("%c", plaintext[i]);
         }
     }
-
-
-
-
-    printf("\n"); //Print a new line
-    return 0;
+    printf("\n");                                               //Print a new line
+    return 0;                                                   //return 0 because it worked!
 
 }
 
