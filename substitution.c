@@ -51,13 +51,15 @@ int main(int argc, string argv[])
         {
             int l = plaintext[i];
             l = l - 65;
-            printf("%c", argv[1][l]);
+            char c = toupper(argv[1][l]);
+            printf("%c", c);
         }
-        if (islower(plaintext[i]))
+        else if (islower(plaintext[i]))
         {
             int l = plaintext[i];
             l = l - 97;
-            printf("%c", argv[1][l]);
+            char c = tolower(argv[1][l]);
+            printf("%c", c);
         }
         else // if it's not upper or lowercase don't rotate it.
         {
@@ -156,5 +158,10 @@ upper or lower case, but either way it needs to match the
 case of the plaintext.
 
 So I'll have to think about how I can do that?
+
+Wow, that was easier than I expected becasuse of the ctype
+thing called, tolower and toupper. So now it works?
+
+Time to test it!
 
 */
