@@ -164,4 +164,6 @@ thing called, tolower and toupper. So now it works?
 
 Time to test it!
 
+It works! Now to run it through check50.
+
 */
